@@ -2,27 +2,259 @@
 title: "Charles Manson PreTest"
 output: html_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r Initialisierung der Packages}
+library(knitr)
+library(igraph)
+library(igraphdata)
+library(rmarkdown)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r Einlesung der Daten}
+el <- read.csv("https://raw.githubusercontent.com/hdm-crpr/226305/master/data/crpr/edges.csv", header=T, as.is=T, sep = ",")
+nodes <- read.csv("https://raw.githubusercontent.com/hdm-crpr/226305/master/data/crpr/nodes.csv", header=T, as.is=T, sep = ",")
+edgematrix <-as.matrix(el)
+s <- graph_from_data_frame(d=edgematrix, vertices=nodes, directed=T)
+s
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r Plotten der Rohdaten}
+plot(s)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r Pro-Tipp: Vertex-Labels wieder anzeigen lassen}
+
+# Wenn Sie mit vertex.label=NA im Plot gearbeitet haben, bleiben die Labels, d.h. Beschriftungen erhalten.
+
+# Falls Sie die Labels dauerhaft gelöscht haben sollten, z.B. durch
+# V(s)$label <- NA
+
+# dann lassen sich die Labels wieder herstellen.
+
+# Labels wiederherstellen
+V(s)$label <- V(s)$name
+# weist dem Vertex-Attribut "label" wieder das Vertex-Attribut "name" zu.
+
+# Damit wir nicht immer bestimmte Attribute im plot() Befehl beschreiben müssen, lassen sich diese dauerhaft umdefinieren. Wir setzen jetzt z.B. dauerhaft die die Kantenstärke auf .2. Merke: der plot() Befehl gilt immer nur für den jeweiligen Plot und setzt vorher definierte Werte außer Kraft (für diesen einen Plot)
+
+# setzt die Pfeilspitze dauerhaft auf den Wert .2
+E(s)$arrow.size <- 0.2
+
+
+plot(s,
+     edge.curved=0.2,
+     edge.color="black",
+     layout=layout_with_kk,
+     main="Beispielnetzwerk CR/PR", 
+     sub="mit IDs der Knoten")
+
+```
+
+# Vergleichsnetzwerke erstellen (subgraph.edges)
+
+```{r Netzwerkattribute auslesen}
+
+# Auflistung der Edge- und Nodeattribute
+list.edge.attributes(s)
+list.vertex.attributes(s)
+
+# Auswahl spezifischer Attribute
+edge.attributes(s)$relation
+vertex.attributes(s)$sex
+
+```
+
+
+
+```{r Kapitel 3: Netzwerk mit subgraph.edges unterteilen}
+
+# Erstellt das neue Netzwerk help, in dem nur alle Kanten verwendet werden, die einen Wert > 1 haben. Da der Wert 1 sich auf das Zusammenarbeitsnetzwerk bezieht, sind dies alle Unterstützungsnetzwerke. Alternativ lassen sich andere logische Operatoren verwenden.
+
+help <- subgraph.edges(s, E(s)[relation == 1])
+help
+plot(help, main="help")
+
+work <- subgraph.edges(s, E(s)[relation == 2])
+work
+plot(work, main="work")
+
+# definiert, dass 2 Abbildungen in einer Zeile stehen
+par(mfrow=c(1,2), mar=c(0,0,2,1)) 
+
+plot(help,
+     layout=layout_with_kk,
+     edge.color="red",
+     edge.curved=.2,
+     edge.curved=curve_multiple(help),
+     main="Ratsuche-Netzwerk",
+     sub="n=38, KK-Algorithmus")
+
+plot(work,
+     layout=layout_with_kk,
+     edge.color="blue",
+     edge.curved=.2,
+     edge.curved=curve_multiple(work),
+     main="Projekt-Netzwerk",
+     sub="n=38, KK-Algorithmus")
+
+
+
+# setzt die Abbildungen wieder zurück
+par(mfrow=c(1,2), mar=c(0,0,2,1)) 
+
+```
+
+# Netzwerkmaße für das Ratsuche Netzwerk
+
+```{r Berechnung Netzwerkmaße für das Ratsuche Netzwerk}
+
+# Generelle Werte
+is_connected(help)
+components(help)
+edge_density(help)
+mean_distance(help)
+reciprocity(help)
+
+# Spezifische Maße (Pfaddistanzen)
+diameter(help)
+get_diameter(help)
+farthest_vertices(help)
+
+```
+
+```{r Aufgabe: Berechnen Sie die Netzwerkmaße für work}
+
+# Berechnen Sie die Netzwerkmaße für work
+
+# Generelle Werte
+is_connected()
+components()
+edge_density()
+mean_distance()
+reciprocity()
+
+# Spezifische Maße (Pfaddistanzen)
+diameter()
+get_diameter()
+farthest_vertices()
+
+```
+
+# Aufgabe: Vergleichen Sie die Netzwerkmaße der beiden Netzwerke: wie lassen sich die Werte interpretieren? Sie können sich die Hilfe für jeden Befehl über ?() aufrufen lassen. 
+
+
+# Untervergleich eines Netzwerks (Ratsuche)
+
+```{r Unterteilung eines Netzwerks }
+# unterteilt das Netzwerk in das Hilfsnetzwerk h1 mit einem Gewicht von 1
+h1 <- subgraph.edges(help, E(help)[weight == 1])
+# analog dazu das Hilfsnetzwerk mit einem Gewicht von 3
+h3 <- subgraph.edges(help, E(help)[weight == 3])
+# Vergleich der beiden Netzwerke
+h1
+h3
+# jedes Netzwerk hat jetzt genau 38 Knoten mit 38 Kanten
+
+
+# definiert, dass 3 plots in einer Zeile stehen
+par(mfrow=c(1,3), mar=c(0,0,2,2)) 
+
+plot(help,
+     layout=layout_with_kk,
+     edge.color="red",
+     edge.curved=.2,
+     edge.width=E(help)$weight,
+     edge.curved=curve_multiple(help),
+     main="Ratsuche-Netzwerk \n gesamt",
+     sub="n=38, KK-Algorithmus")
+
+plot(h3,
+     layout=layout_with_kk,
+     edge.color="red",
+     edge.width=E(h3)$weight,
+     main="Ratsuche-Netzwerk \n (Gewicht 3)",
+     sub="n=38, Beziehungsstärke 3 (Gewicht), erste Nennung")
+
+plot(h1, layout=layout_with_kk,
+     main="Ratsuche-Netzwerk \n (Gewicht 1)",
+     edge.color="red",
+     edge.width=E(h1)$weight,
+     edge.weight=3,
+     sub="n=38, Beziehungsstärke 1 (Gewicht), zweite Nennung")
+```
+
+```{r Berechnung Zentralitätsmaße im Ratsuche-Netzwerk}
+
+# Wir verwendne für die Berechnung der Werte das Attribut "normalized = TRUE": damit werden die Bezüge der Knoten zueinander bereits in Werte zwischen 0 und 1 indiziert, was die Visualisierung vereinfacht
+
+help
+help_deg <- degree(help, normalized = TRUE)
+help_indeg <- degree(help, mode="in", normalized = TRUE)
+help_between <- betweenness(help, V(help), directed=TRUE, normalized=TRUE)
+help_closeness <- closeness(help, vids = V(help), mode="all", normalized=TRUE)
+
+# Ausgabe der normalisierten Werte
+help_deg
+help_indeg
+help_between
+help_closeness
+
+# Welcher Knoten hat die jeweils höchsten Werte?
+
+which.max(help_deg)
+which.max(help_indeg)
+which.max(help_between)
+which.max(help_closeness)
+
+```
+
+
+
+
+```{r Visualisierung der positionalen Maße }
+
+par(mfrow=c(2,2), mar=c(0,0,2,1))
+
+plot(help,
+     vertex.size=help_deg*150,
+     layout=layout_with_kk,
+     vertex.label=NA,
+     main="Degree allgemein")
+
+plot(help,
+     vertex.size=help_indeg*150,
+     layout=layout_with_kk,
+     vertex.label=NA,
+     main="Indegree")
+
+plot(help,
+     vertex.size=help_between*150,
+     layout=layout_with_kk,
+     vertex.label=NA,
+     main="Betweenness")
+
+plot(help,
+     vertex.size=help_closeness*150,
+     layout=layout_with_kk,
+     vertex.label=NA,
+     main="Closeness")
+
+```
+
+
+
+```{r Triadenzensus}
+# Triadenzensus
+count_triangles(help)
+# hier wird ausgegeben, welcher Knoten an wie vielen "Dreiecken" beteiligt ist (Gewichtung ist egal)
+
+triad_census(help)
+# Die Ausgabe von triad_census erfolgt entlang der vorgegebenen Reihenfolge des Triadenzensus. Beispielsweise sehen Sie, dass es nur drei echte Cliquen (Typ 003) in dem Netzwerk gibt. Der Typ 003 kommt immer an letzter Stelle, Typ 300 (isolates, keine Verbindung) wird immer zu Beginn gestellt.
+
+largest_cliques(help)
+# liefert uns die Ausgabe der größten Cliquen im Netzwerk
+
+```
+
+
