@@ -7,6 +7,11 @@ library(knitr)
 library(igraph)
 library(igraphdata)
 library(rmarkdown)
+library(shiny)
+library(shinythemes)
+library(dplyr)
+library(readr)
+library(intergraph)
 ```
 
 
@@ -25,7 +30,7 @@ plot(s)
 ```
 
 
-```{r Schöner plotten}
+```{r Testplots}
 
 plot(s,
      edge.arrow.size=0.1,
@@ -52,5 +57,30 @@ plot(s,
      edge.color="black",
      layout=layout.drl,
      main="Manson PreTest",)
+```
+
+
+```{r Entzerrter Plot}
+coords <- layout.auto(s)*2
+
+par(mfrow=c(1,1), mar=c(0,0,3,0))
+
+plot(s, 
+     layout=coords, 
+     rescale=FALSE,
+     ylim=c(-4.6,7.5),
+     xlim=c(-2.5,1.5), 
+     asp= 0.5,
+     edge.width = 0.7,
+     edge.curved=TRUE, 
+     vertex.size=12, 
+     vertex.label.font=2,
+     vertex.label.dist=5,
+     vertex.label.degree = pi/2, 
+     vertex.label.cex=.5,
+     vertex.label.family = "Arial",
+     edge.arrow.size=0.2,
+     main="Manson",
+     sub="Pre-Test")
 ```
 
