@@ -33,7 +33,8 @@ Jahr der Bekanntschaft (bzw. Art der relationship) um nach vor/nach Haft filtern
 year end	
 Jahr ENDE der Bekanntschaft (bzw. Art der relationship) um nach vor/nach Haft filtern zu können und Dauer zu bestimmen					
 						
-## nodelist (Menschen)	Grundregel: die IDs der Nodelist müssen mit den IDs der Edgelist komplett übereinstimmen. Ausprägungen der Attribute in der Regel numerisch definieren.					
+## nodelist (Menschen)	
+Grundregel: die IDs der Nodelist müssen mit den IDs der Edgelist komplett übereinstimmen. Ausprägungen der Attribute in der Regel numerisch definieren.					
 
 id	eindeutige Identifikation jedes einzelnen Knotens (vertex), der erfasst wird.  					
 
