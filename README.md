@@ -34,22 +34,30 @@ year end
 Jahr ENDE der Bekanntschaft (bzw. Art der relationship) um nach vor/nach Haft filtern zu können und Dauer zu bestimmen					
 						
 nodelist (Menschen)	Grundregel: die IDs der Nodelist müssen mit den IDs der Edgelist komplett übereinstimmen. Ausprägungen der Attribute in der Regel numerisch definieren.					
+
 id	eindeutige Identifikation jedes einzelnen Knotens (vertex), der erfasst wird.  					
+
 name	Name oder Bezeichnung des Knotens. 					
+
 sex	dichotome Ausprägung: male oder female. Einfacher auch numerisch als 1 oder 2 zu kodieren.					
+
 date of birth	DD-MM-YYYY					
+
 date of death	DD-MM-YYYY					
+
 type of death	
 	1 = lebend
 	2 = natürlicher Tod
 	3 = ermordet
 	4 = Selbstmord					
+
 power	definiert als Macht des Akteurs 
 	1 = sehr gering
 	2 = gerin
 	3 = normal
 	4 = hoch
 	5 = sehr hoch				
+
 relation to murder	
 	1 = hat niemanden getötet
 	2 = war bei Mord anwesend
