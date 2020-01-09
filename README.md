@@ -8,7 +8,7 @@ Datenstand: 07. Januar 2020
 Codebuch definieren Sie, wie und nach welchen Kriterien erfasst werden.						
 						
 					
-edgelist	
+## edgelist	
 Grundregel: Die Edgelist darf pro Spalte immer nur einen Wert enthalten. Bis auf die ID idealerweise numerisch codiert (als Zahl).					
 from	
 definiert den Sender in gerichteten Netzwerken. Entspricht ID in der Nodelist. Keine Sonderzeichen, nur ein Wort					
@@ -33,7 +33,7 @@ Jahr der Bekanntschaft (bzw. Art der relationship) um nach vor/nach Haft filtern
 year end	
 Jahr ENDE der Bekanntschaft (bzw. Art der relationship) um nach vor/nach Haft filtern zu können und Dauer zu bestimmen					
 						
-nodelist (Menschen)	Grundregel: die IDs der Nodelist müssen mit den IDs der Edgelist komplett übereinstimmen. Ausprägungen der Attribute in der Regel numerisch definieren.					
+## nodelist (Menschen)	Grundregel: die IDs der Nodelist müssen mit den IDs der Edgelist komplett übereinstimmen. Ausprägungen der Attribute in der Regel numerisch definieren.					
 
 id	eindeutige Identifikation jedes einzelnen Knotens (vertex), der erfasst wird.  					
 
@@ -49,7 +49,8 @@ type of death
 	1 = lebend
 	2 = natürlicher Tod
 	3 = ermordet
-	4 = Selbstmord					
+	4 = Selbstmord	
+	5 = Verschwunden, genaueres Unbekannt 
 
 power	definiert als Macht des Akteurs 
 	1 = sehr gering
@@ -64,14 +65,14 @@ relation to murder
 	3 = hat jemanden getötet					
 						
 						
-nodelist (Orte)	
+## nodelist (Orte)	
 Grundregel: die IDs der Nodelist müssen mit den IDs der Edgelist komplett übereinstimmen. Ausprägungen der Attribute in der Regel numerisch definieren.	
 
 id	eindeutige Identifikation jedes einzelnen Knotens (vertex), der erfasst wird.  					
 name	Name oder Bezeichnung des Knotens. 					
 						
 						
-nodelist (Gruppierungen)	
+## nodelist (Gruppierungen)	
 Grundregel: die IDs der Nodelist müssen mit den IDs der Edgelist komplett übereinstimmen. Ausprägungen der Attribute in der Regel numerisch definieren.					
 
 id	eindeutige Identifikation jedes einzelnen Knotens (vertex), der erfasst wird.  					
@@ -79,5 +80,5 @@ name	Name oder Bezeichnung des Knotens.
 						
 						
 						
-Sonstiges						
+## Sonstiges						
 99	definiert fehlende Werte					
