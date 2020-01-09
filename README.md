@@ -39,9 +39,21 @@ name	Name oder Bezeichnung des Knotens.
 sex	dichotome Ausprägung: male oder female. Einfacher auch numerisch als 1 oder 2 zu kodieren.					
 date of birth	DD-MM-YYYY					
 date of death	DD-MM-YYYY					
-type of death	1 = lebend, 2 = natürlicher Tod , 3 = ermordet, 4 = Selbstmord					
-power	definiert als Macht des Akteurs (1 = sehr gering, 5 = sehr hoch)					
-relation to murder	1 = hat niemanden getötet, 2 = war bei Mord anwesend, 3 = hat jemanden getötet					
+type of death	
+	1 = lebend
+	2 = natürlicher Tod
+	3 = ermordet
+	4 = Selbstmord					
+power	definiert als Macht des Akteurs 
+	1 = sehr gering
+	2 = gerin
+	3 = normal
+	4 = hoch
+	5 = sehr hoch				
+relation to murder	
+	1 = hat niemanden getötet
+	2 = war bei Mord anwesend
+	3 = hat jemanden getötet					
 						
 						
 nodelist (Orte)	
