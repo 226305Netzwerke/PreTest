@@ -1,0 +1,56 @@
+---
+title: "Charles Manson PreTest"
+output: html_document
+---
+```{r Initialisierung der Packages}
+library(knitr)
+library(igraph)
+library(igraphdata)
+library(rmarkdown)
+```
+
+
+```{r Einlesung der Daten}
+el <- read.csv("https://raw.githubusercontent.com/226305Netzwerke/PreTest/master/226305_Projekt_CharlesManson_Edgelist.csv", header=T, as.is=T, sep = ",")
+nl <- read.csv("https://raw.githubusercontent.com/226305Netzwerke/PreTest/master/226305_Projekt_CharlesManson_Nodelist.csv", header=T, as.is=T, sep = ",")
+edgematrix <- as.matrix(el)
+
+
+s <- graph_from_data_frame(d=edgematrix, vertices = nl, directed=T)
+s
+```
+
+```{r Plotten der Rohdaten}
+plot(s)
+```
+
+
+```{r Schöner plotten}
+
+plot(s,
+     edge.arrow.size=0.1,
+     edge.curved=0.2,
+     edge.color="black",
+     layout=layout_with_kk,
+     main="Manson PreTest",)
+plot(s,
+     edge.arrow.size=0.1,
+     edge.curved=0.2,
+     edge.color="black",
+     layout=layout.auto,
+     main="Manson PreTest",)
+
+plot(s,
+     edge.arrow.size=0.1,
+     edge.curved=0.2,
+     edge.color="black",
+     layout=layout_nicely,
+     main="Manson PreTest",)
+plot(s,
+     edge.arrow.size=0.1,
+     edge.curved=0.2,
+     edge.color="black",
+     layout=layout.drl,
+     main="Manson PreTest",)
+```
+
