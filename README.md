@@ -50,7 +50,7 @@ type of death
 	2 = natürlicher Tod
 	3 = ermordet
 	4 = Selbstmord	
-	5 = Verschwunden, genaueres Unbekannt 
+	5 = Verschwunden, genaueres unbekannt 
 
 power	definiert als Macht des Akteurs 
 	1 = sehr gering
