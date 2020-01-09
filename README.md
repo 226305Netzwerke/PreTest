@@ -53,7 +53,7 @@ type of death
 
 power	definiert als Macht des Akteurs 
 	1 = sehr gering
-	2 = gerin
+	2 = gering
 	3 = normal
 	4 = hoch
 	5 = sehr hoch				
